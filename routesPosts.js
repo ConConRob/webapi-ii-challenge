@@ -67,4 +67,34 @@ routes.delete("/:id", (req, res) => {
     });
 });
 
+routes.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const post = req.body;
+  if (!post.title || !post.title) {
+    res
+      .status(400)
+      .json({
+        errorMessage: "Please provide title and contents for the post."
+      });
+  } else {
+    Posts.update(id, post)
+      .then(data => {
+        if (data) {
+          res.status(202).json({...post, id});
+        } else {
+          res
+            .status(404)
+            .json({
+              message: "The post with the specified ID does not exist."
+            });
+        }
+      })
+      .catch(() => {
+        res
+          .status(500)
+          .json({ error: "The post information could not be modified." });
+      });
+  }
+});
+
 module.exports = routes;
