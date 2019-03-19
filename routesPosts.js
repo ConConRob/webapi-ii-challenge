@@ -13,7 +13,7 @@ routes.post("/", (req, res) => {
   } else {
     Posts.insert(req.body)
       .then(data => {
-        res.status(201).json({...data, title, contents});
+        res.status(201).json({ ...data, title, contents });
       })
       .catch(() =>
         res.status(500).json({
@@ -21,6 +21,18 @@ routes.post("/", (req, res) => {
         })
       );
   }
+});
+
+routes.get("/", (req, res) => {
+  Posts.find()
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(() => {
+      res
+        .status(500)
+        .json({ error: "The posts information could not be retrieved." });
+    });
 });
 
 module.exports = routes;
