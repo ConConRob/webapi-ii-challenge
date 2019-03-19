@@ -76,7 +76,7 @@ routes.put("/:id", (req, res) => {
       .json({
         errorMessage: "Please provide title and contents for the post."
       });
-  } else {
+  } else { 
     Posts.update(id, post)
       .then(data => {
         if (data) {
