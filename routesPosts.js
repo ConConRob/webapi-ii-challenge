@@ -35,4 +35,18 @@ routes.get("/", (req, res) => {
     });
 });
 
+routes.get("/:id",(req, res) => {
+  Posts.findById(req.params.id)
+    .then(data => {
+      if(data.length > 0){
+        res.status(200).json(data)
+      }else {
+        res.status(404).json({ message: "The post with the specified ID does not exist." })
+      }
+    })
+    .catch(() => {
+      res.status(500).json({ error: "The post could not be removed" })
+    })
+})
+
 module.exports = routes;
